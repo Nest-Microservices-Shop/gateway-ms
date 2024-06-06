@@ -1,6 +1,8 @@
-export { OrderPaginationDto } from './order-pagination.dto';
+export * from './order-pagination.dto';
 
-export { StatusDto } from './status.dto';
+export * from './status.dto';
 
-export { CreateOrderDto } from './create-order.dto';
-export { UpdateOrderDto } from './update-order.dto';
+export * from './create-order.dto';
+export * from './update-order.dto';
+
+export * from './order-item.dto';

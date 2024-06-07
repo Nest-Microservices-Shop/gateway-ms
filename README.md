@@ -14,5 +14,13 @@
 1.  Clonar el repositorio
 2.  Instalar dependencias
 3.  Crear un archivo `.env` basdo en el `env.template`
-4.  Levantar los microservicios
-5.  Ejecutar `yarn start:dev`
+4.  Levantar el servidor de nats
+
+```pwsh
+
+docker run -d --name nats-server -p 4222:4222 -p 8222:8222 nats
+
+```
+
+5.  Levantar los microservicios
+6.  Ejecutar `yarn start:dev`

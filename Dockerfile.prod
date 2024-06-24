@@ -1,0 +1,42 @@
+# Dependencias
+FROM node:21-alpine3.19 as deps
+
+WORKDIR /user/src/app
+
+COPY package.json ./
+COPY yarn.lock ./
+
+RUN yarn install
+
+# Builder
+FROM node:21-alpine3.19 as build
+
+WORKDIR /user/src/app
+
+COPY --from=deps /user/src/app/node_modules ./node_modules
+
+COPY . .
+
+RUN yarn build
+
+RUN yarn install --frozen-lockfile --production && yarn cache clean
+
+# Imagen final de docker
+FROM node:21-alpine3.19 as prod
+
+WORKDIR /user/src/app
+
+COPY --from=build /user/src/app/node_modules ./node_modules
+
+# Copiar la carpeta de distribucion
+COPY --from=build /user/src/app/dist ./dist
+
+ENV NODE_ENV=production
+
+USER node
+
+EXPOSE 3000
+
+CMD [ "node", "dist/main.js" ]
+
+# 

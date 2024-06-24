@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  client-gateway:
+    build:
+      context: ./
+      dockerfile: Dockerfile.prod
+    image: fmyersdev/client-gateway-prod:latest
+    ports:
+      - ${CLIENT_GATEWAY_PORT}:${CLIENT_GATEWAY_PORT}
+    environment:
+      - PORT=${CLIENT_GATEWAY_PORT}
+      - NATS_SERVERS=nats://nats-server:4222
